@@ -1,4 +1,5 @@
 # Territory Predictive Insights (CitizenTech)
+
 ## Clima local: chuva e risco de alagamento
 
 Plataforma de monitoramento territorial em Java (POO) que lê sensores simulados, faz previsões simples e emite alertas explicados.
@@ -7,9 +8,9 @@ Plataforma de monitoramento territorial em Java (POO) que lê sensores simulados
 
 ## 1. Público beneficiado e decisão apoiada
 
-- **Quem sofre o problema:** moradores de áreas baixas e próximas ao córrego (ex.: "Zona Sul - Vale do Córrego").
-- **Quem usa o sistema:** associação de bairro, equipe comunitária e Defesa Civil municipal.
-- **Decisão que o sistema apoia:** "Devemos avisar moradores, vistoriar bueiros ou acionar rotas de evacuação hoje?"
+- Quem sofre o problema: moradores de áreas baixas e próximas ao córrego (ex.: "Zona Sul - Vale do Córrego").
+- Quem usa o sistema: associação de bairro, equipe comunitária e Defesa Civil municipal.
+- Decisão que o sistema apoia: "Devemos avisar moradores, vistoriar bueiros ou acionar rotas de evacuação hoje?"
 
 O território é descrito somente por região e equipamento. Nenhum dado pessoal é utilizado.
 
@@ -17,33 +18,27 @@ O território é descrito somente por região e equipamento. Nenhum dado pessoal
 
 ## 2. Como rodar o projeto
 
-**Requisitos:** JDK 11 ou superior.
+Requisitos: JDK 11 ou superior.
 
 ### Compilação
 
-```bash
-javac -encoding UTF-8 *.java
-```
+    javac -encoding UTF-8 *.java
 
 ### Execução
 
-```bash
-java -Dfile.encoding=UTF-8 SistemaMonitoramento
-```
+    java -Dfile.encoding=UTF-8 SistemaMonitoramento
 
-**Observação:** No Windows, caso os acentos apareçam incorretamente, execute o comando abaixo antes de rodar o programa:
+Observação: No Windows, caso os acentos apareçam incorretamente, execute o comando abaixo antes de rodar o programa:
 
-```bash
-chcp 65001
-```
+    chcp 65001
 
 ### Roteiro rápido de teste
 
-1. **Opção 2:** logo no início, o sistema se cala devido à quantidade insuficiente de leituras.
-2. **Opção 4:** digite `20` para simular leituras e executar previsões e alertas automaticamente. A simulação é aleatória, portanto, repita para visualizar diferentes níveis.
-3. **Opção 3:** teste população negativa, região vazia e a troca de limiares.
+1. Opção 2: logo no início, o sistema se cala devido à quantidade insuficiente de leituras.
+2. Opção 4: digite 20 para simular leituras e executar previsões e alertas automaticamente. A simulação é aleatória, portanto, repita para visualizar diferentes níveis.
+3. Opção 3: teste população negativa, região vazia e a troca de limiares.
 
-**Código de acesso padrão (somente para teste):** `1234`.
+Código de acesso padrão (somente para teste): 1234.
 
 ---
 
@@ -51,26 +46,26 @@ chcp 65001
 
 | Arquivo | Papel |
 |---|---|
-| `ComponenteTerritorial` | Classe abstrata (id, nome, região, status; `ativar()`/`desativar()`; método abstrato `verificarStatus()`). |
-| `EstacaoDeColeta` | Classe concreta (`extends ComponenteTerritorial`), classe interna de `SistemaMonitoramento.java`. |
-| `Sensor` | Interface (`lerValor`, `verificarFuncionamento`, `getTipo`, `getUnidade`). |
-| `SensorChuva`, `SensorNivelRio`, `SensorUmidade` | Implementam `Sensor` (`implements Sensor`), com valores simulados por `Math.random()`. |
-| `DadosTerritorio` | Encapsulamento: atributos privados, setters que validam e limiares protegidos por código de acesso. |
-| `EstrategiaPrevisao` | Classe abstrata da herança (`prever()` e `explicar()` abstratos). |
-| `PrevisaoMediaMovel` | Herda; atributo `janela`; utiliza `super(...)` e `super.calcularMedia(...)`. |
-| `PrevisaoComparacao` | Herda; atributos `tamanhoPeriodo`, `mediaAtual`, `mediaAnterior`; utiliza `super`. |
-| `SistemaMonitoramento` | Classe principal: menu, loop, leituras (`ArrayList`), previsões e alertas. |
+| ComponenteTerritorial | Classe abstrata (id, nome, região, status; ativar()/desativar(); método abstrato verificarStatus()). |
+| EstacaoDeColeta | Classe concreta (extends ComponenteTerritorial), classe interna de SistemaMonitoramento.java. |
+| Sensor | Interface (lerValor, verificarFuncionamento, getTipo, getUnidade). |
+| SensorChuva, SensorNivelRio, SensorUmidade | Implementam Sensor (implements Sensor), com valores simulados por Math.random(). |
+| DadosTerritorio | Encapsulamento: atributos privados, setters que validam e limiares protegidos por código de acesso. |
+| EstrategiaPrevisao | Classe abstrata da herança (prever() e explicar() abstratos). |
+| PrevisaoMediaMovel | Herda; atributo janela; utiliza super(...) e super.calcularMedia(...). |
+| PrevisaoComparacao | Herda; atributos tamanhoPeriodo, mediaAtual, mediaAnterior; utiliza super. |
+| SistemaMonitoramento | Classe principal: menu, loop, leituras (ArrayList), previsões e alertas. |
 
 ---
 
 ## 4. Decisões da equipe
 
-- **Recorte:** clima local com três sensores:
+- Recorte: clima local com três sensores:
   - Chuva (mm/h).
   - Nível do córrego (cm).
   - Umidade (%).
 
-- **Previsões simples:**
+- Previsões simples:
   - Média das últimas 5 leituras.
   - Comparação entre períodos de 3 leituras (previsto = média atual + variação).
 
@@ -82,7 +77,7 @@ chcp 65001
 | Nível | 150 | 250 | 350 |
 | Umidade | 70 | 85 | 95 |
 
-*Os valores são ilustrativos e devem ser calibrados com a Defesa Civil.*
+Os valores são ilustrativos e devem ser calibrados com a Defesa Civil.
 
 Cada alerta apresenta o sensor, o valor previsto, a estratégia utilizada, o limite ultrapassado e a sugestão de ação.
 
@@ -114,15 +109,15 @@ Por isso, o sistema explica o motivo do alerta e sugere ações, mas a decisão 
 
 ## 6. Uso de IA
 
-Utilizamos a IA para ajudar na criação dos códigos, verificar correções de código, solucionar complicações e auxiliar na utilização do `README.md`.
+Utilizamos a IA para ajudar na criação dos códigos, verificar correções de código, solucionar complicações e auxiliar na utilização do README.md.
 
 ---
 
 ## 7. Divisão de tarefas
 
-- **Dicley Lucas Neto:** sensores e `ComponenteTerritorial` / `EstacaoDeColeta`.
-- **Nathan de Mello Teixeira:** previsões.
-- **Pedro Ivson Falcão de Leucas:** `DadosTerritorio`, menu e alertas.
+- Dicley Lucas Neto: sensores e ComponenteTerritorial / EstacaoDeColeta.
+- Nathan de Mello Teixeira: previsões.
+- Pedro Ivson Falcão de Leucas: DadosTerritorio, menu e alertas.
 
 Todos devem realizar commits no GitHub.
 
